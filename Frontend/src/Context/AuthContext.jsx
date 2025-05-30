@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(''); // Added for error feedback
   const navigate = useNavigate();
-  const API_URL = 'http://localhost:4000/api';
+  const API_URL = 'https://task-management-system-backend-ljjh.onrender.com/api';
 
   useEffect(() => {
     if (!token) {
