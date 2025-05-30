@@ -1,32 +1,37 @@
- import express from 'express';
- import'dotenv/config';
+// server.js
+import express from 'express';
+import 'dotenv/config';
 import cors from 'cors';
 import { connectDB } from './Config/db.js';
 import userRouter from './Routes/userRoute.js';
 import taskRouter from './Routes/taskRoute.js';
 
+const app = express();
+const port = process.env.PORT || 4000;
 
+// ✅ CORS (allow Vercel frontend)
+app.use(cors({
+  origin: 'https://task-management-system-theta-nine.vercel.app',
+  credentials: true,
+}));
 
- const app = express();
- const port = process.env.PORT || 4000;
+// ✅ Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-    // Middleware
-    app.use(cors());
-    app.use(express.json());
-    app.use(express.urlencoded({ extended: true }));
+// ✅ MongoDB connection
+connectDB();
 
-    // MongoDB connection
-    connectDB();
+// ✅ Routes
+app.use('/api/users', userRouter);
+app.use('/api/tasks', taskRouter);
 
-    // Routes
+// ✅ Health Check
+app.get('/', (req, res) => {
+  res.send('API is running');
+});
 
-    app.use('/api/users', userRouter);
-    app.use('/api/tasks', taskRouter);
-
-    app.get('/', (req, res) => {
-        res.send('Api is running');
-    });
-
-    app.listen(port, () => {
-        console.log(`Server started oh http://localhost:${port}`);
-    });
+// ✅ Start Server
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
