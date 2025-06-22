@@ -7,10 +7,12 @@ import userRouter from './Routes/userRoute.js';
 import taskRouter from './Routes/taskRoute.js';
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Server running on port ${port}`));;
 
 // ✅ CORS (allow Vercel frontend)
 app.use(cors({
+
   origin: 'https://task-management-system-theta-nine.vercel.app',
   credentials: true,
 }));

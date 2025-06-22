@@ -41,24 +41,28 @@ const Login = () => {
         )}
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-gray-700">Email</label>
+            <label className="block text-gray-700" htmlFor="login-email">Email</label>
             <input
+            id="login-email"
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow"
+              autoComplete="email"
               required
             />
           </div>
           <div>
-            <label className="block text-gray-700">Password</label>
+            <label className="block text-gray-700" htmlFor="login-password">Password</label>
             <input
+            id="login-password" 
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow"
+              autoComplete="current-password"
               required
             />
           </div>
