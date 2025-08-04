@@ -8,10 +8,11 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token') || '');
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(''); // Added for error feedback
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const API_URL =(` ${import.meta.env.BACKEND_PORT}`);
+  // ✅ Correct API URL from Vite environment variable
+  const API_URL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     if (!token) {
@@ -22,9 +23,10 @@ export const AuthProvider = ({ children }) => {
 
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`${API_URL}/users/me`, {
+        const response = await axios.get(`${API_URL}/api/v1/user/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
+
         if (response.data.success) {
           setUser(response.data.user);
         } else {
@@ -66,7 +68,7 @@ export const AuthProvider = ({ children }) => {
       setUser(null);
       setToken('');
       localStorage.removeItem('token');
-      navigate('/login'); // Redirect to login
+      navigate('/login');
     } catch (err) {
       console.error('Logout error:', err);
       setError('Failed to log out. Please try again.');
